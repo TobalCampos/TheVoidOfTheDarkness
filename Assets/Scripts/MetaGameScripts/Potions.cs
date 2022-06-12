@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class Potions : MonoBehaviour
 {
-    [SerializeField] private int pocionVida;
+    [SerializeField] public int pocionVida;
     private PlayerStats PS;
+    public float curacion;
 
     
     public Image potionImg;
@@ -14,19 +16,18 @@ public class Potions : MonoBehaviour
     public Sprite potionNull;
     public Sprite potionMitad;
 
+    public float delay = 3;
+    public float delayAplicar;
+
     void Start()
     {
         PS = GetComponent<PlayerStats>(); 
+        pocionVida = 6;
+        delayAplicar = 1;
     }
 
-    // Update is called once per frame
     void Update()
-    {
-        if(Input.GetKeyDown("r"))
-        {
-            UsarPocionVida();
-        }
-
+    {  
         textCant.text = "x"+ pocionVida.ToString();
 
         if(pocionVida <= 3 && pocionVida > 0)
@@ -38,15 +39,30 @@ public class Potions : MonoBehaviour
         {
             potionImg.sprite = potionNull;
         }
+
+        delay += Time.deltaTime;
     }
 
-    private void UsarPocionVida()
+    // Update is called once per frame
+    public void Curarse(InputAction.CallbackContext context)
     {
-
-        if(pocionVida > 0 && PS.maxHealth >= PS.currentHealth + 10)
+        
+        if(pocionVida > 0 && PS.maxHealth >= PS.currentHealth + 10 && delayAplicar < delay)
         {
-            PS.DecreaseHealth(-10);
+            PS.DecreaseHealth(curacion);
             pocionVida --;
-        }
+            delay = 0;
+        }    
+    }
+
+    public void CurarseTel()
+    {
+        
+        if(pocionVida > 0 && PS.maxHealth >= PS.currentHealth + 10 && delayAplicar < delay)
+        {
+            PS.DecreaseHealth(curacion);
+            pocionVida --;
+            delay = 0;
+        }    
     }
 }

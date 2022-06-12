@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class PlayerHab : MonoBehaviour
@@ -10,7 +11,7 @@ public class PlayerHab : MonoBehaviour
     [SerializeField] private GameObject fireballs;
 
     private Animator anim;
-    private float cooldownTimer = Mathf.Infinity;
+    public float cooldownTimer = Mathf.Infinity;
 
     private PlayerSript PS;
     public Image playerHab;
@@ -27,26 +28,47 @@ public class PlayerHab : MonoBehaviour
     }
 
     private void Update()
+    {   
+        
+            playerHab.fillAmount = cooldownTimer/attackCooldown;
+            cooldownTimer += Time.deltaTime;
+            float TimeInt = 25 - Mathf.Round(cooldownTimer);
+
+             if (TimeInt > 0)
+            {
+            textTime.text = TimeInt.ToString();
+            }
+            else{
+                textTime.text = "";
+            }
+            
+    }
+
+    public void Habilidad(InputAction.CallbackContext context)
     {
-
-        if (Input.GetMouseButton(1) && cooldownTimer > attackCooldown)
-            Attack();
-        cooldownTimer += Time.deltaTime;
-        playerHab.fillAmount = cooldownTimer/attackCooldown;
-        float TimeInt = 25 - Mathf.Round(cooldownTimer);
-
-        if (TimeInt > 0)
+        if(cooldownTimer > attackCooldown)
         {
-         textTime.text = TimeInt.ToString();
-        }
-        else{
-            textTime.text = "";
+            Attack();
         }
     }
 
+    public void HabilidadTel()
+    {
+        if(cooldownTimer > attackCooldown)
+        {
+            Attack();
+        }
+    }
+
+    public void FinishHab()
+    {
+        anim.SetBool("attackhab",false);
+    }
+    
+
     private void Attack()
     {
-        anim.SetTrigger("attackhab");
+        anim.SetBool("attackhab",true);
         cooldownTimer = 0;
 
         fireballs.transform.position = firePoint.position;

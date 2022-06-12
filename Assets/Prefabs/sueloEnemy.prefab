@@ -249,6 +249,22 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 2815523553818278927, guid: e39e6d90eafc44d4c95f7508f0110087, type: 3}
+      propertyPath: m_UiScaleMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815523553818278927, guid: e39e6d90eafc44d4c95f7508f0110087, type: 3}
+      propertyPath: m_ScreenMatchMode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815523553818278927, guid: e39e6d90eafc44d4c95f7508f0110087, type: 3}
+      propertyPath: m_ReferenceResolution.x
+      value: 1920
+      objectReference: {fileID: 0}
+    - target: {fileID: 2815523553818278927, guid: e39e6d90eafc44d4c95f7508f0110087, type: 3}
+      propertyPath: m_ReferenceResolution.y
+      value: 1080
+      objectReference: {fileID: 0}
     - target: {fileID: 2815523554281446201, guid: e39e6d90eafc44d4c95f7508f0110087, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

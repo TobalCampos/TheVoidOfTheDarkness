@@ -164,6 +164,7 @@ public class MagoEnemy : MonoBehaviour
     public void Flip()
     {
         Vector3 rotation = transform.eulerAngles;
+        
         if(transform.position.x > target.position.x)
         {
             rotation.y = 180f;

@@ -50,7 +50,6 @@ public class ObjectMovement : MonoBehaviour
 
     IEnumerator ReactivatePlatform()
     {
-        bool reactivate = true;
         plataforma1.SetActive(false);
         plataforma2.SetActive(false);
         plataforma3.SetActive(false);
@@ -64,7 +63,6 @@ public class ObjectMovement : MonoBehaviour
         plataforma2.SetActive(true);
         plataforma3.SetActive(true);
         myColliders.enabled = true;
-        reactivate = false;
     }
 
     private void MoveObject()

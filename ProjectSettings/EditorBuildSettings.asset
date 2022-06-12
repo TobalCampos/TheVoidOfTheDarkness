@@ -14,4 +14,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Lvl2.unity
     guid: 3ba199c525b0dee49bf16fb113e0e481
-  m_configObjects: {}
+  - enabled: 1
+    path: Assets/Scenes/Audio1.unity
+    guid: 9e1b5ad3ffe5fd340b4789c9b0ba6792
+  - enabled: 1
+    path: Assets/Scenes/Creditos.unity
+    guid: bbc25a7ccb6d1aa43acb7b9a43fb0f59
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: 49dc7625ad766284bbe06b4ab94721e8, type: 2}

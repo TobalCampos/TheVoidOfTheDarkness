@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class PlayerSript : MonoBehaviour
 {
@@ -72,6 +74,8 @@ public class PlayerSript : MonoBehaviour
 
     private GameControlPause gameControl;
     private PuntoGuardado PuntoGuardado;
+
+    private bool DialogoPosible = false;
 
     void Start()
     {
@@ -197,33 +201,7 @@ public class PlayerSript : MonoBehaviour
     }
 
     private void CheckInput()
-    {
-        movementInputDirection = Input.GetAxisRaw("Horizontal");
-
-        if(Input.GetButtonDown("Jump"))
-        {
-           if(isGrounded || (amountOfJumpsLeft > 0 && isTouchingWall))
-           {
-               NormalJump();
-           }
-           else
-           {
-               jumpTimer = JumpTimerSet;
-               isAttemptingToJump = true;
-           }
-        }
-        
-        if(Input.GetButtonDown("Horizontal") && isTouchingWall)
-        {
-            if(!isGrounded && movementInputDirection != facingDirection)
-            {
-                canMove = false;
-                canFlip = false;
-
-                turnTimer = turnTimerSet;
-            }
-        }
-
+    {        
         if(!canMove)
         {
             turnTimer -= Time.deltaTime;
@@ -234,20 +212,103 @@ public class PlayerSript : MonoBehaviour
             }
         }
 
+        if(isTouchingWall)
+        {
+            if(!isGrounded && movementInputDirection != facingDirection)
+            {
+                canMove = false;
+                canFlip = false;
+
+                turnTimer = turnTimerSet;
+            }
+        }
 
 
-        if(checkJumpMultiplier && !Input.GetButtonUp("Jump"))
+        if(checkJumpMultiplier)
         {
             checkJumpMultiplier = false;
             rb.velocity = new Vector2(rb.velocity.x, rb.velocity.y * variableJumpMultiplier);
         }
+    }
 
-        if (Input.GetButtonDown("Dash"))
+    public void JumpInput(InputAction.CallbackContext context)
+    {
+         if(isGrounded || (amountOfJumpsLeft > 0 && isTouchingWall))
+           {
+               NormalJump();
+           }
+           else
+           {
+               jumpTimer = JumpTimerSet;
+               isAttemptingToJump = true;
+           }
+    }
+
+     public void JumpInputTel()
+    {
+         if(isGrounded || (amountOfJumpsLeft > 0 && isTouchingWall))
+           {
+               NormalJump();
+           }
+           else
+           {
+               jumpTimer = JumpTimerSet;
+               isAttemptingToJump = true;
+           }
+    }
+
+    public void MoveInput(InputAction.CallbackContext context)
+    {
+        movementInputDirection = context.ReadValue<Vector2>().x;
+    }
+
+    public void MoveInputTel1()
+    {
+        movementInputDirection = -1;
+    }
+
+    public void MoveInputTel0()
+    {
+        movementInputDirection = 0;
+    }
+
+    public void MoveInputTel2()
+    {
+        movementInputDirection = 1;
+    }
+
+     private void ApplyMovement()
+    {
+
+        if(!isGrounded && !isWallSliding && movementInputDirection == 0 && !knockback)
         {
-            if(Time.time >= (lastDash + dashCoolDown))
-            AttemptToDash();
+            rb.velocity = new Vector2(rb.velocity.x * airDragMultipler, rb.velocity.y);
+        }else if (canMove && !knockback)
+        {
+            rb.velocity = new Vector2(movementSpeed * movementInputDirection, rb.velocity.y);
+        }
+
+        if (isWallSliding)
+        {
+            if(rb.velocity.y < -wallSlideSpeed)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
+            }
         }
     }
+
+    public void DashInput(InputAction.CallbackContext context)
+    {
+        if(Time.time >= (lastDash + dashCoolDown))
+            AttemptToDash();
+    }
+
+     public void DashInputTel()
+    {
+        if(Time.time >= (lastDash + dashCoolDown))
+            AttemptToDash();
+    }
+
 
     public int GetFacingDirection()
     {
@@ -364,25 +425,7 @@ public class PlayerSript : MonoBehaviour
         }
     }
 
-    private void ApplyMovement()
-    {
-
-        if(!isGrounded && !isWallSliding && movementInputDirection == 0 && !knockback)
-        {
-            rb.velocity = new Vector2(rb.velocity.x * airDragMultipler, rb.velocity.y);
-        }else if (canMove && !knockback)
-        {
-            rb.velocity = new Vector2(movementSpeed * movementInputDirection, rb.velocity.y);
-        }
-
-        if (isWallSliding)
-        {
-            if(rb.velocity.y < -wallSlideSpeed)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, -wallSlideSpeed);
-            }
-        }
-    }
+   
 
     public void DisableFlip()
     {
@@ -425,17 +468,30 @@ public class PlayerSript : MonoBehaviour
         if(collision.gameObject.tag == "NPC")
         {
             npc =collision.gameObject.GetComponent<NPC_Controller>();
-
-            if (Input.GetKey(KeyCode.E))
-                npc.ActivateDialogue();
+            DialogoPosible = true;
         }
     }
 
-    
+    public void Dialogos(InputAction.CallbackContext context)
+    {
+        if(DialogoPosible)
+        {
+            npc.ActivateDialogue();
+        }
+    }   
+
+    public void DialogosTel()
+    {
+        if(DialogoPosible)
+        {
+            npc.ActivateDialogue();
+        }
+    }    
 
     private void OnTriggerExit2D(Collider2D collision)
     {
         npc = null;
+        DialogoPosible = false;
     }
 
 }

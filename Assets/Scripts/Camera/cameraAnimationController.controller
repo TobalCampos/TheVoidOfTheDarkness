@@ -47,13 +47,13 @@ AnimatorStateMachine:
     m_Position: {x: 640, y: -80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 7543473179959629524}
-    m_Position: {x: 310, y: 320, z: 0}
+    m_Position: {x: 170, y: 340, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 5412823189214542483}
-    m_Position: {x: 450, y: 470, z: 0}
+    m_Position: {x: 280, y: 460, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 3973114652901338093}
-    m_Position: {x: 620, y: 340, z: 0}
+    m_Position: {x: 400, y: 340, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
@@ -102,6 +102,12 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 2
     m_ConditionEvent: MainCamBoss
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: zona
+    m_EventTreshold: 0
+  - m_ConditionMode: 2
+    m_ConditionEvent: boss
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -5200069929971905726}
@@ -182,6 +188,9 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: boss
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: zona
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 5412823189214542483}
@@ -313,6 +322,12 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: MainCamBoss
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: zona
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: boss
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3973114652901338093}

@@ -22,13 +22,18 @@ public class GameManager : MonoBehaviour
     private GameObject canvasEXP;
 
     private CinemachineVirtualCamera CVC;
+    private CinemachineVirtualCamera CVC2;
     private PlayerStats stats;
     public PuntoGuardado PuntoGuardado;
+    public LogicaOpciones Lo;
 
     public void Start()
     {
         CVC = GameObject.Find("PlayerCamara").GetComponent<CinemachineVirtualCamera>();
         stats = GameObject.Find("Player").GetComponent<PlayerStats>();
+        Lo = GameObject.Find("ControladorDeEscena").GetComponent<LogicaOpciones>();
+        CVC2 = GameObject.Find("CM vcam5").GetComponent<CinemachineVirtualCamera>();
+       
     }
     
 
@@ -54,8 +59,10 @@ public class GameManager : MonoBehaviour
             CVC.m_Follow = playerTemp.transform;
             respawn = false;
             deadCanvas.SetActive(false);  
+            Lo.DetectarPersonaje();
             canvasEXP.SetActive(true);
 
         }
     }
+    
 }

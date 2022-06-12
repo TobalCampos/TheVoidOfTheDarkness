@@ -21,7 +21,11 @@ public class PlayerStats : MonoBehaviour
     public Color Low;
     public Color High;
 
+    public bool BossActivado = false;
+
     public static PlayerStats instance;
+    public GameObject Bs;
+    public Boss Bss;
 
     public void Awake()
     {
@@ -39,6 +43,11 @@ public class PlayerStats : MonoBehaviour
         SetHealth(currentHealth,maxHealth);
     }
 
+    public void CambiarBoss()
+    {
+        BossActivado = true;
+    }
+
     public void DecreaseHealth(float amount)
     {
         currentHealth -= amount;
@@ -46,13 +55,25 @@ public class PlayerStats : MonoBehaviour
 
         if(currentHealth <= 0.0f)
         {
+            soundManager.instance.StopSound();
             soundManager.instance.PlaySound(deathSound);
             Die();
         }
     }
 
-    private void Die()
+    public void Die()
     {   
+        if(BossActivado)
+        {
+            Bss = GameObject.Find("Boss").GetComponent<Boss>();
+            Bs = GameObject.Find("Boss");
+        
+            if(Bss.BossActivado)
+            {
+                Destroy(Bs);
+            }
+        }
+      
         PlayerPrefs.SetFloat("HP",maxHealth);
         Destroy(gameObject);
         GM.Respawn();
@@ -66,4 +87,8 @@ public class PlayerStats : MonoBehaviour
         
     }
     
+    public void GuardarVida()
+    {
+        PlayerPrefs.SetFloat("HP",maxHealth);
+    }
 }

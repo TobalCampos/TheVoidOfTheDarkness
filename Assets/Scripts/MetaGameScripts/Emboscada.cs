@@ -13,6 +13,9 @@ public class Emboscada : MonoBehaviour
 
     public GameObject Portal;
 
+    [SerializeField]
+    private AudioClip SoundEffect;
+
     private bool emboscadaON;
 
     // Start is called before the first frame update
@@ -33,6 +36,7 @@ public class Emboscada : MonoBehaviour
         {
             Portal.SetActive(true);
             emboscadaON = false;
+            soundManager.instance.PlaySound(SoundEffect);
         }
     }
 }

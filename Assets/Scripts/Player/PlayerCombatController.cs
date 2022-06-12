@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class PlayerCombatController : MonoBehaviour
 {
@@ -41,22 +43,28 @@ public class PlayerCombatController : MonoBehaviour
     {
         if (gameControl.isGameRunning())
         {
-            CheckCombatInput();
             CheckAttack(); 
-        }
-      
+        } 
     }
 
-    private void CheckCombatInput()
+    public void CheckCombatInput(InputAction.CallbackContext context)
     {
-        if (Input.GetMouseButtonDown(0))
-        {
+    
             if(combatEnabled)
             {
                 gotInput = true;
                 lastInputTime = Time.time;
             }
-        }
+    }
+
+    public void CheckCombatInputTel()
+    {
+    
+            if(combatEnabled)
+            {
+                gotInput = true;
+                lastInputTime = Time.time;
+            }
     }
 
     private void CheckAttack()

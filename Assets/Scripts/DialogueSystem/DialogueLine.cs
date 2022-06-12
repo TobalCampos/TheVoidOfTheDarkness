@@ -37,7 +37,12 @@ namespace DialogueSystem
 
         private void Update()
         {
-            if(Input.GetMouseButtonDown(1))
+            CheckPasar();
+        }
+
+        private void CheckPasar()
+        {
+            if(UnityEngine.InputSystem.Mouse.current.leftButton.wasReleasedThisFrame)
             {
                 if(textHolder.text != input)
                 {

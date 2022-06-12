@@ -12,6 +12,7 @@ public class ExperienceScript : MonoBehaviour
 
     public static ExperienceScript instance;
 
+
     private void Awake()
     {
         if(instance == null)
@@ -33,8 +34,7 @@ public class ExperienceScript : MonoBehaviour
 
     // Update is called once per frame
     void Update()
-    {
-        
+    {   
     }
 
     public void expModifier(float experience)
@@ -43,17 +43,19 @@ public class ExperienceScript : MonoBehaviour
         expImage.fillAmount = currentExperience / expTNL; 
 
         PlayerPrefs.SetFloat("BackgroundEXP",currentExperience);
-        PlayerPrefs.SetInt("LvlExp",currentLVL);
 
         if(currentExperience >= expTNL)
         {
             expTNL = expTNL + 50;
             currentExperience = 0;
+            expImage.fillAmount = currentExperience / expTNL; 
             PlayerStats.instance.maxHealth += 10f;
             PlayerStats.instance.DecreaseHealth(-10);
             currentLVL++;
             currentLVLtext.text = currentLVL.ToString();
-
+            PlayerStats.instance.GuardarVida(); 
+            PlayerPrefs.SetInt("LvlExp",currentLVL);
+            PlayerPrefs.SetFloat("BackgroundEXP",currentExperience);
         }
     }
 }

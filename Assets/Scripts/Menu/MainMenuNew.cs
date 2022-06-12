@@ -19,7 +19,7 @@ public class MainMenuNew : MonoBehaviour
     [Tooltip("The UI Pop-Up when 'EXIT' is clicked")]
     public GameObject PanelareYouSure;
     [Tooltip("Panel de options")]
-    public GameObject PanelOptions;
+    public GameObject PanelJugar;
     
     
  
@@ -31,6 +31,11 @@ public class MainMenuNew : MonoBehaviour
     [Tooltip("The GameObject holding the Audio Source component for the SWOOSH SOUND when switching to the Settings Screen")]
     public GameObject swooshSound;
  
+    [Header("MenuJugar")]
+    public GameObject nuevaPartida;
+    public GameObject continuar;
+    public GameObject atrasjugar;
+
     //Menu inicial
     [Tooltip("Jugar Button GameObject Pop Up")]
     public GameObject jugarBtn;
@@ -38,21 +43,50 @@ public class MainMenuNew : MonoBehaviour
     public GameObject opcionesBtn;
     [Tooltip("Salir Button GameObject Pop Up")]
     public GameObject salirBtn;
+
+
  
     //pantalla are you sure
     public GameObject noBtn;
-    public GameObject Atrasjugar;
     public GameObject Atrasoptions;
+    public ControladorOpciones panelOpciones;
+    public string CargarEscena;
 
+
+    void Start()
+    {
+        panelOpciones = GameObject.FindGameObjectWithTag("opciones").GetComponent<ControladorOpciones>();
+        CargarEscena = PlayerPrefs.GetString("CargarEscena","Audio1");
+    }
+
+    public void Jugar()
+    {
+        PanelJugar.gameObject.SetActive(true);
+        MainPanel.gameObject.SetActive(false);
+    }
+
+    public void AtrasJugar()
+    {
+        PanelJugar.gameObject.SetActive(false);
+        MainPanel.gameObject.SetActive(true);  
+    }
  
     public void NewGame()
     {      
-            SceneManager.LoadScene("Lvl1", LoadSceneMode.Single);
+        PlayerPrefs.DeleteAll();
+        CargarEscena = PlayerPrefs.GetString("CargarEscena","Audio1");    
+        SceneManager.LoadScene(CargarEscena, LoadSceneMode.Single);
+    }
+
+    public void ContinuarGame()
+    {
+        SceneManager.LoadScene(CargarEscena, LoadSceneMode.Single);
     }
 
      public void AtrasOptions()
     {
-        PanelOptions.gameObject.SetActive(false);       
+        panelOpciones.pantallaOpciones.SetActive(false);   
+        Atrasoptions.SetActive(false);    
         MainPanel.gameObject.SetActive(true);  
         jugarBtn.GetComponent<Button>().Select(); 
          
@@ -60,7 +94,8 @@ public class MainMenuNew : MonoBehaviour
 
      public void OpenOptions()
     {
-        PanelOptions.gameObject.SetActive(true);
+        panelOpciones.pantallaOpciones.SetActive(true);
+        Atrasoptions.SetActive(true);
         MainPanel.gameObject.SetActive(false);  
     }
  

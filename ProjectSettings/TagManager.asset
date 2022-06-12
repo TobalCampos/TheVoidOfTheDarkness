@@ -13,6 +13,9 @@ TagManager:
   - TextEXP
   - Ground
   - fireball
+  - PanelOptions
+  - Boss
+  - DialogueHolder
   layers:
   - Default
   - TransparentFX
@@ -26,8 +29,8 @@ TagManager:
   - Damageable
   - Dead
   - Player
-  - 
-  - 
+  - Options
+  - Button
   - 
   - 
   - 

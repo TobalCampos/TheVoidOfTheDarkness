@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace DialogueSystem
 {
@@ -9,6 +10,7 @@ namespace DialogueSystem
         private IEnumerator dialogueSeq;
         private bool dialogueFinished;
         [SerializeField] private GameObject bordecanvas;
+
         
 
         private void OnEnable()
@@ -17,15 +19,20 @@ namespace DialogueSystem
             StartCoroutine(dialogueSeq);
         }
 
-        private void Update()
+        public void CerrarDialogo(InputAction.CallbackContext context)
         {
-            if(Input.GetKey(KeyCode.Escape))
-            {
                 Desactivate();
                 gameObject.SetActive(false);
                 StopCoroutine(dialogueSeq);
                 bordecanvas.SetActive(false);
-            }
+        }
+
+         public void CerrarDialogoTel()
+        {
+                Desactivate();
+                gameObject.SetActive(false);
+                StopCoroutine(dialogueSeq);
+                bordecanvas.SetActive(false);
         }
 
         private IEnumerator dialogueSequence()
